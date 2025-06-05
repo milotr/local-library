@@ -1,0 +1,2 @@
+# LocalLibrary
+Django project

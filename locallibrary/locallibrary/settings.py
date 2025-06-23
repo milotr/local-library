@@ -34,8 +34,9 @@ SECRET_KET = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-4hl6sl8inpuozz
 # DEBUG = True
 DEBGU = os.environ.get('DJANGO_DEBUG', '') != False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://milotr.pythonanywhere.com/', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = ['https://milotr.pythonanywhere.com']
 
 # Application definition
 

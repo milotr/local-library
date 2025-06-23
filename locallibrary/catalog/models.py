@@ -4,6 +4,11 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import UniqueConstraint # Constrains fields to unique values
 from django.db.models.functions import Lower # Returns lower cased value of field
+
+from django.conf import settings
+
+from datetime import date
+
 class Genre(models.Model):
     """Model representing a book genre."""
     name = models.CharField(
@@ -53,6 +58,13 @@ class Book(models.Model):
     # Genre class has already been defined so we can specify the object above.
     genre = models.ManyToManyField(
         Genre, help_text="Select a genre for this book")
+    
+    class Meta:
+        permissions = (
+            # ("create_book", "Create book"),
+            ("update_book", "Update book"),
+            # ("delete_book", "Delete book"),
+        )
 
     def __str__(self):
         """String for representing the Model object."""
@@ -92,12 +104,23 @@ class BookInstance(models.Model):
         help_text='Book availability',
     )
 
+    borrower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+
     class Meta:
         ordering = ['due_back']
+        permissions = (
+            ("can_mark_returned", "Set book as returned"),
+            ("can_see_borrowed", "See all borrowed books"),
+        )
 
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.id} ({self.book.title})'
+    
+    @property
+    def is_overdue(self):
+        """Determines if the book is overdue based on due date and current date."""
+        return bool(self.due_back and date.today() > self.due_back)
 
 class Author(models.Model):
     """Model representing an author."""
@@ -108,6 +131,11 @@ class Author(models.Model):
 
     class Meta:
         ordering = ['last_name', 'first_name']
+        permissions = (
+            # ("add_author", "Add author"),
+            ("update_author", "Update author"),
+            # ("delete_author", "Delete author"),
+        )
 
     def get_absolute_url(self):
         """Returns the URL to access a particular author instance."""

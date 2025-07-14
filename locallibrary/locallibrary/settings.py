@@ -28,11 +28,11 @@ load_dotenv(env_path)
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-4hl6sl8inpuozz*%&%durm9aj8*q@uae8$fuu3y(_k*fdouf=a'
 
-SECRET_KET = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-4hl6sl8inpuozz*%&%durm9aj8*q@uae8$fuu3y(_k*fdouf=a')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-4hl6sl8inpuozz*%&%durm9aj8*q@uae8$fuu3y(_k*fdouf=a')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBGU = os.environ.get('DJANGO_DEBUG', '') != False
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != False
 
 ALLOWED_HOSTS = ['https://milotr.pythonanywhere.com', '127.0.0.1']
 
